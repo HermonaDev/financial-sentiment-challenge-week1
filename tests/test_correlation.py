@@ -1,0 +1,87 @@
+"""
+Unit tests for correlation analyzer module
+"""
+
+import unittest
+import pandas as pd
+import numpy as np
+import sys
+sys.path.append('../')
+
+from src.correlation_analyzer import CorrelationAnalyzer
+
+
+class TestCorrelationAnalyzer(unittest.TestCase):
+    """Test cases for CorrelationAnalyzer class"""
+    
+    def setUp(self):
+        """Set up test fixtures"""
+        self.analyzer = CorrelationAnalyzer(min_data_points=10)
+        
+        # Create sample data
+        dates = pd.date_range('2024-01-01', periods=50)
+        
+        self.sentiment_df = pd.DataFrame({
+            'stock': ['AAPL'] * 50,
+            'date': dates,
+            'avg_sentiment': np.random.randn(50) * 0.2,
+            'article_count': np.random.randint(1, 10, 50)
+        })
+        
+        self.returns_df = pd.DataFrame({
+            'date': dates,
+            'Daily_Return': np.random.randn(50) * 2
+        })
+    
+    def test_merge_data(self):
+        """Test merging sentiment and returns"""
+        merged = self.analyzer.merge_sentiment_and_returns(
+            self.sentiment_df, self.returns_df, 'AAPL'
+        )
+        self.assertGreater(len(merged), 0, "Merged data should not be empty")
+        self.assertIn('avg_sentiment', merged.columns)
+        self.assertIn('Daily_Return', merged.columns)
+    
+    def test_correlation_calculation(self):
+        """Test correlation calculation"""
+        sentiment = pd.Series([0.1, 0.2, -0.1, 0.3, -0.2] * 10)
+        returns = pd.Series([1.0, 2.0, -1.0, 3.0, -2.0] * 10)
+        
+        corr, p_val = self.analyzer.calculate_correlation(sentiment, returns)
+        
+        self.assertIsNotNone(corr, "Correlation should not be None")
+        self.assertTrue(-1 <= corr <= 1, "Correlation should be between -1 and 1")
+    
+    def test_insufficient_data(self):
+        """Test handling of insufficient data"""
+        small_sentiment = self.sentiment_df.head(5)
+        small_returns = self.returns_df.head(5)
+        
+        result = self.analyzer.analyze_stock_correlation(
+            small_sentiment, small_returns, 'AAPL'
+        )
+        
+        self.assertEqual(result['status'], 'insufficient_data')
+    
+    def test_batch_analysis(self):
+        """Test batch correlation analysis"""
+        stock_data = {
+            'AAPL': self.returns_df,
+            'GOOGL': self.returns_df.copy()
+        }
+        
+        # Add GOOGL to sentiment data
+        googl_sentiment = self.sentiment_df.copy()
+        googl_sentiment['stock'] = 'GOOGL'
+        combined_sentiment = pd.concat([self.sentiment_df, googl_sentiment])
+        
+        results = self.analyzer.batch_analyze_correlations(
+            combined_sentiment, stock_data
+        )
+        
+        self.assertEqual(len(results), 2, "Should have results for 2 stocks")
+        self.assertIn('correlation', results.columns)
+
+
+if __name__ == '__main__':
+    unittest.main()
