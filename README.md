@@ -136,9 +136,6 @@ financial-sentiment-challenge-week1/
 ### Technical Indicators Dashboard
 ![Technical Analysis](notebooks/MRK_technical_analysis.png)
 
-### Sentiment Distribution
-![Sentiment Analysis](notebooks/sentiment_analysis.png)
-
 ## 🔬 Methodology
 
 ### Sentiment Analysis Approach
