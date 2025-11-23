@@ -158,6 +158,57 @@ financial-sentiment-challenge-week1/
 - **Financial News Dataset**: FNSPID (Financial News and Stock Price Integration Dataset)
 - **Stock Price Data**: Yahoo Finance via `yfinance` API
 
+## 🚧 Current Limitations & Next Steps
+
+### Current Limitations
+- Sentiment analysis uses basic TextBlob - could improve with FinBERT or custom financial NLP model
+- Correlation analysis is linear (Pearson) - non-linear relationships not captured
+- Limited to daily aggregation - intraday patterns not explored
+- Sample size varies by stock - some correlations may not be statistically robust
+
+### Next Steps (Week 2+)
+- [ ] Implement machine learning models for price prediction
+- [ ] Add lag analysis (sentiment today → returns tomorrow)
+- [ ] Incorporate volume-weighted sentiment scores
+- [ ] Build interactive dashboard with real-time updates
+- [ ] Deploy API endpoint for sentiment-based trading signals
+
+## 🧪 Running Tests
+```bash
+# Run all unit tests
+python -m pytest tests/
+
+# Run specific test file
+python tests/test_sentiment.py
+```
+
+## 📞 Usage Examples
+
+### Using the Modular Pipeline
+```python
+from src.data_loader import NewsDataLoader
+from src.sentiment_analyzer import SentimentAnalyzer
+
+# Load data
+loader = NewsDataLoader('data/raw_analyst_ratings.csv')
+news_df = loader.load_data()
+news_df = loader.preprocess_dates()
+
+# Analyze sentiment
+analyzer = SentimentAnalyzer()
+news_df = analyzer.analyze_dataframe(news_df)
+
+# Get summary
+summary = analyzer.get_sentiment_summary(news_df)
+print(summary)
+```
+
+### Running Full Pipeline
+```bash
+cd scripts
+python run_analysis_pipeline.py
+```
+
 ## 👤 Author
 
 **Hermona** 
