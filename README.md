@@ -166,7 +166,7 @@ financial-sentiment-challenge-week1/
 - Limited to daily aggregation - intraday patterns not explored
 - Sample size varies by stock - some correlations may not be statistically robust
 
-### Next Steps (Week 2+)
+### Potential Future imporvements (Week 1+)
 - [ ] Implement machine learning models for price prediction
 - [ ] Add lag analysis (sentiment today → returns tomorrow)
 - [ ] Incorporate volume-weighted sentiment scores
