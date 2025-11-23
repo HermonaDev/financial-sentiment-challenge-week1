@@ -134,7 +134,10 @@ financial-sentiment-challenge-week1/
 ## 📈 Sample Visualizations
 
 ### Technical Indicators Dashboard
-![Technical Analysis](notebooks/MRK_technical_analysis.png)
+![Technical Analysis](notebooks/AAPL_technical_analysis.png)
+
+### Stock Comparison Analysis
+![Stock Comparison](notebooks/stock_comparison.png)
 
 ## 🔬 Methodology
 
