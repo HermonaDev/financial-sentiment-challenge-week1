@@ -9,6 +9,7 @@ sys.path.append('../')
 from src.data_loader import NewsDataLoader
 from src.sentiment_analyzer import SentimentAnalyzer
 from src.technical_indicators import TechnicalIndicators
+from src.correlation_analyzer import CorrelationAnalyzer
 import pandas as pd
 import yfinance as yf
 
@@ -61,9 +62,17 @@ def run_full_pipeline(data_path: str, top_n_stocks: int = 5):
         except Exception as e:
             print(f"  ✗ {symbol}: {str(e)[:30]}")
     
-    # Step 5: Merge and correlate
+    # Step 5: Calculate correlations using the module
     print("\n[5/5] Calculating correlations...")
-    correlations = {}
+    corr_analyzer = CorrelationAnalyzer(min_data_points=30)
+    
+    correlations_df = corr_analyzer.batch_analyze_correlations(
+        daily_sentiment, 
+        stock_data
+    )
+    
+    print("\nCorrelation Results:")
+    print(correlations_df[['stock', 'correlation', 'p_value', 'significant', 'strength']].to_string(index=False))
     
     for symbol in stock_data.keys():
         # Merge sentiment with returns
