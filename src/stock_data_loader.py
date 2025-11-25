@@ -82,7 +82,7 @@ class StockDataLoader:
             try:
                 # Primary: Use yfinance for reliable OHLCV data
                 df = yf.download(symbol, start=self.start_date, end=self.end_date, 
-                                progress=False, quiet=True)
+                                    progress=False)
                 
                 if df.empty or len(df) < 50:
                     print(f"  ✗ {symbol}: Insufficient data ({len(df)} days)")
