@@ -26,6 +26,8 @@ data/
 .idea/
 *.swp
 
+reports/
+
 # OS
 .DS_Store
 Thumbs.db
