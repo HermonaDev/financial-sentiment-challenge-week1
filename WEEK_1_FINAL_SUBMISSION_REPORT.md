@@ -158,6 +158,14 @@ News coverage is highly concentrated across stocks. While 44,196 total articles 
 
 ### 3.2 Task 2 - Technical Quantitative Analysis
 
+**Stock Data Loading Architecture:**
+A custom `StockDataLoader` class was developed to handle professional OHLCV (Open, High, Low, Close, Volume) data retrieval and validation. This loader integrates PyNance for comprehensive financial metrics extraction (P/E ratios, dividend yields, market capitalization, sector classifications) while maintaining yfinance as the reliable backend for price data. The DataLoader implements:
+
+- **OHLCV Validation:** Removes data errors (High < Low, Close outside High-Low range, zero volumes)
+- **PyNance Integration:** Retrieves fundamental financial metrics for context-aware analysis
+- **Data Cleaning:** Handles missing values, outliers, and alignment across multiple time series
+- **Summary Statistics:** Provides data quality metrics and date range validation
+
 Technical indicators were calculated for major stocks using TA-Lib across the 2,296 trading days in the dataset:
 
 **Implemented Indicators:**
@@ -323,7 +331,58 @@ The findings contribute to a growing body of research on the financial implicati
 ### Python Environment
 - Python 3.11
 - Key libraries: pandas 2.3.3, numpy 2.3.5, scipy 1.16.3, matplotlib 3.10.7, seaborn 0.13.2
-- Analysis tools: TA-Lib 0.6.8, TextBlob 0.19.0, yfinance 0.2.66
+- Analysis tools: TA-Lib 0.6.8, TextBlob 0.19.0, yfinance 0.2.66, PyNance (financial metrics)
+
+### Custom Modules
+
+**StockDataLoader (`src/stock_data_loader.py`)**
+Professional-grade data loader implementing OHLCV validation and PyNance integration:
+
+```python
+class StockDataLoader:
+    """
+    OHLCV Data Loader with PyNance Financial Metrics Integration
+    
+    Methods:
+    - load_ohlcv_data(): Loads and validates OHLCV data for symbols
+    - get_financial_metrics(): Extracts P/E, dividend yield, market cap via PyNance
+    - get_symbol_data(symbol): Returns cleaned OHLCV DataFrame
+    - get_statistics(): Generates summary statistics table
+    
+    Features:
+    - Automatic data validation (removes High < Low, invalid ranges)
+    - PyNance integration for fundamental financial data
+    - yfinance fallback for reliable price data retrieval
+    - Zero-volume filtering and NaN handling
+    """
+```
+
+**TA-Lib Indicator Functions** (`notebooks/02_quantitative_analysis.ipynb`)
+Industry-standard technical indicator implementation using TA-Lib library:
+
+```python
+# SMA (Simple Moving Average)
+data['SMA_20_talib'] = talib.SMA(close, timeperiod=20)
+data['SMA_50_talib'] = talib.SMA(close, timeperiod=50)
+
+# EMA (Exponential Moving Average)
+data['EMA_12_talib'] = talib.EMA(close, timeperiod=12)
+data['EMA_26_talib'] = talib.EMA(close, timeperiod=26)
+
+# MACD (Moving Average Convergence Divergence)
+macd, signal, hist = talib.MACD(close, fastperiod=12, slowperiod=26, signalperiod=9)
+
+# RSI (Relative Strength Index)
+data['RSI_talib'] = talib.RSI(close, timeperiod=14)
+
+# Bollinger Bands
+bb_upper, bb_middle, bb_lower = talib.BBANDS(close, timeperiod=20, nbdevup=2, nbdevdn=2)
+
+# Advanced Indicators
+data['Stoch_K'], data['Stoch_D'] = talib.STOCH(high, low, close)
+data['ATR'] = talib.ATR(high, low, close, timeperiod=14)
+data['OBV'] = talib.OBV(close, volume)
+```
 
 ### Data Sources
 - News articles: raw_analyst_ratings.csv (44,196 headlines)
