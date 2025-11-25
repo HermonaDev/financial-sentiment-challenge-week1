@@ -26,9 +26,9 @@ financial-sentiment-challenge-week1/
 ├── .vscode/
 │   └── settings.json           # VS Code settings
 ├── notebooks/
-│   ├── eda_analysis.ipynb              # Task 1: Exploratory Data Analysis
-│   ├── quantitative_analysis.ipynb     # Task 2: Technical Indicators
-│   └── sentiment_correlation_analysis.ipynb  # Task 3: Sentiment & Correlation
+│   ├── 01_initial_eda_analysis.ipynb              # Task 1: Exploratory Data Analysis
+│   ├── 02_quantitative_analysis.ipynb     # Task 2: Technical Indicators
+│   └── 03_sentiment_correlation_analysis.ipynb  # Task 3: Sentiment & Correlation
 ├── src/
 │   └── __init__.py             # Source code modules
 ├── tests/
@@ -76,7 +76,7 @@ financial-sentiment-challenge-week1/
 
 ### Task 1: Exploratory Data Analysis (EDA) ✅
 
-**Notebook**: `notebooks/eda_analysis.ipynb`
+**Notebook**: `notebooks/01_initial_eda_analysis.ipynb`
 
 | Analysis | Description |
 |----------|-------------|
@@ -93,7 +93,7 @@ financial-sentiment-challenge-week1/
 
 ### Task 2: Quantitative Analysis ✅
 
-**Notebook**: `notebooks/quantitative_analysis.ipynb`
+**Notebook**: `notebooks/02_quantitative_analysis.ipynb`
 
 | Indicator | Description |
 |-----------|-------------|
@@ -110,7 +110,7 @@ financial-sentiment-challenge-week1/
 
 ### Task 3: Sentiment & Correlation Analysis 🔄 (In Progress)
 
-**Notebook**: `notebooks/sentiment_correlation_analysis.ipynb`
+**Notebook**: `notebooks/03_sentiment_correlation_analysis.ipynb`
 
 | Component | Status |
 |-----------|--------|
@@ -134,10 +134,10 @@ financial-sentiment-challenge-week1/
 ## 📈 Sample Visualizations
 
 ### Technical Indicators Dashboard
-![Technical Analysis](notebooks/MRK_technical_analysis.png)
+![Technical Analysis](reports/figures/MRK_technical_analysis.png)
 
 ### Stock Comparison Analysis
-![Stock Comparison](notebooks/stock_comparison.png)
+![Stock Comparison](reports/figures/stock_comparison.png)
 
 ## 🔬 Methodology
 

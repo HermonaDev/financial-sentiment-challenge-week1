@@ -26,12 +26,14 @@ from nltk.sentiment import SentimentIntensityAnalyzer
 from pathlib import Path
 
 sns.set_style('whitegrid')
-VIS_DIR = Path('visualizations')
-VIS_DIR.mkdir(exist_ok=True)
+# Save visual outputs to the reports figures directory (ignored in git)
+VIS_DIR = Path('reports/figures')
+VIS_DIR.mkdir(parents=True, exist_ok=True)
 
 NEWS_CSV = Path('data/newsData/raw_analyst_ratings.csv')
 STOCK_DIR = Path('data/yfinance_data/Data')
-CORR_CSV = Path('notebooks/correlation_results.csv')
+# Correlation CSV is expected in reports/figures after notebook runs
+CORR_CSV = Path('reports/figures/correlation_results.csv')
 
 # Initialize sentiment analyzer
 sia = SentimentIntensityAnalyzer()
