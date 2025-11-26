@@ -173,6 +173,23 @@ financial-sentiment-challenge-week1/
 - [ ] Build interactive dashboard with real-time updates
 - [ ] Deploy API endpoint for sentiment-based trading signals
 
+## TA-Lib Integration & Validation
+
+When TA-Lib is installed the pipeline uses TA-Lib's implementations for SMA, EMA, MACD, and RSI. The code falls back to pandas-based calculations when TA-Lib is not available.
+
+A validation helper is included in `src/technical_indicators.py` (`TechnicalIndicators.validate_against_talib`) that returns summary statistics comparing the TA-Lib outputs to the pandas implementations. Use this in a notebook after loading a stock's OHLCV DataFrame to produce a short report documenting any small numeric differences (often caused by initial NaN handling and rolling/window edge behavior).
+
+Example usage in a notebook:
+
+```python
+from src.technical_indicators import TechnicalIndicators
+ti = TechnicalIndicators()
+validation = ti.validate_against_talib(stock_df)
+print(validation)
+```
+
+If TA-Lib is not installed in your environment, the helper will return an explanatory message and the pipeline will continue using the pandas calculations.
+
 ## 🧪 Running Tests
 ```bash
 # Run all unit tests
